@@ -1,3 +1,4 @@
+import { useState } from "react"
 import { useSendReport } from "../../hooks/useSendReport"
 
 /**
@@ -14,7 +15,7 @@ function SendReport() {
     handleChange,
     handleSubmit,
   } = useSendReport()
-
+  const [fileName, setFileName] = useState<string>("")
   return (
     <div className="section">
       <div className="section__header">
@@ -90,11 +91,15 @@ function SendReport() {
                   ref={imageRef}
                   type="file"
                   accept="image/*"
+                  onChange={(e) => {
+                    const file = e.target.files?.[0]
+                    setFileName(file ? file.name : "")
+                  }}
                 />
               </label>
-              {imageRef.current?.files?.[0] && (
+              {fileName && (
                 <div className="field__file-name">
-                  {imageRef.current.files[0].name}
+                  {fileName}
                 </div>
               )}
             </div>
